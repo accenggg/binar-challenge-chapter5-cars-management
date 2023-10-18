@@ -1,6 +1,7 @@
-const { Product } = require("../models");
+const { Product, Shop, User } = require("../models");
 const imagekit = require("../lib/imagekit");
 const ApiError = require("../utils/apiError");
+const { Op } = require("sequelize");
 
 const createProduct = async (req, res, next) => {
   const { name, price, stock } = req.body;
@@ -26,6 +27,8 @@ const createProduct = async (req, res, next) => {
       price,
       stock,
       imageUrl: img,
+      userId: req.user.id,
+      shopId: req.user.shopId,
     });
 
     res.status(200).json({
@@ -41,7 +44,30 @@ const createProduct = async (req, res, next) => {
 
 const findProducts = async (req, res, next) => {
   try {
-    const products = await Product.findAll();
+    const { productname, username, shop } = req.query;
+    const condition = {};
+    if (productname) condition.name = { [Op.iLike]: `%${productname}%` };
+
+    const includeShopCondition = {};
+    if (shop) includeShopCondition.name = { [Op.iLike]: `%${shop}%` };
+
+    const includeUserCondition = {};
+    if (username) includeUserCondition.name = { [Op.iLike]: `${username}%` };
+
+    const products = await Product.findAll({
+      include: [
+        {
+          model: Shop,
+          where: includeShopCondition,
+        },
+        {
+          model: User,
+          where: includeUserCondition,
+        },
+      ],
+      where: condition,
+      order: [["id", "ASC"]],
+    });
 
     res.status(200).json({
       status: "Success",

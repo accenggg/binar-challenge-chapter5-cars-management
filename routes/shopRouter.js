@@ -4,11 +4,18 @@ const Shop = require("../controller/shopController");
 
 const autentikasi = require("../middlewares/authenticate");
 const checkRole = require("../middlewares/checkRole");
+const checkOwnership = require("../middlewares/checkOwnership");
+const checkId = require("../middlewares/checkId");
 
-router.post("/", Shop.createShop);
 router.get("/", Shop.findShops);
-router.get("/:id", Shop.findShopById);
-router.patch("/:id", Shop.updateShop);
-router.delete("/:id", Shop.deleteShop);
+router.get("/:id", checkId, autentikasi, checkOwnership, Shop.findShopById);
+router.patch(
+  "/:id",
+  checkId,
+  autentikasi,
+  checkOwnership,
+  checkRole("Owner"),
+  Shop.updateShop
+);
 
 module.exports = router;
