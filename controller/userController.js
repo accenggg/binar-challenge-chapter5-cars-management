@@ -1,6 +1,43 @@
 const { User } = require("../models");
-const imagekit = require("../lib/imagekit");
 const ApiError = require("../utils/apiError");
+const toPascalCase = require("../lib/pascalCase");
+const { array } = require("../middlewares/uploader");
+
+const createUser = async (req, res, next) => {
+  const { name, age, role, address, carsId } = req.body;
+
+  const fixRole = toPascalCase(role);
+
+  console.log(fixRole);
+
+  try {
+    if (fixRole === "Admin" || fixRole === "Member") {
+      const user = await User.create({
+        name,
+        age,
+        role: fixRole,
+        address,
+        carsId: carsId,
+      });
+
+      res.status(201).json({
+        status: "Success",
+        data: {
+          user,
+        },
+      });
+    } else {
+      res.status(400).json({
+        message: "Role hanya bisa diisi dengan 'Admin' atau 'Member'",
+      });
+    }
+  } catch (err) {
+    res.status(400).json({
+      status: "Failed",
+      message: err.message,
+    });
+  }
+};
 
 const findUsers = async (req, res, next) => {
   try {
@@ -37,15 +74,29 @@ const findUserById = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-  const { name, age, role, address, shopId } = req.body;
+  const { name, age, role, address, carsId } = req.body;
   try {
+    const user = await User.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (typeof carsId != "object") {
+      next(new ApiError("masukkan data cardId kedalam Array ([])"));
+    }
+
+    if (!user) {
+      next(new ApiError("User id tersebut gak ada", 404));
+    }
+
     await User.update(
       {
         name,
         age,
         role,
         address,
-        shopId,
+        carsId,
       },
       {
         where: {
@@ -91,6 +142,7 @@ const deleteUser = async (req, res, next) => {
 };
 
 module.exports = {
+  createUser,
   findUsers,
   findUserById,
   updateUser,

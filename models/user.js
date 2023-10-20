@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
 
-      User.hasOne(models.Cars, {
+      User.belongsTo(models.Car, {
         foreignKey: {
-          name: "userId",
+          name: "carsId",
         },
       });
     }
