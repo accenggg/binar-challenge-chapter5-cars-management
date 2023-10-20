@@ -14,18 +14,21 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       age: {
         type: Sequelize.INTEGER,
       },
+      role: {
+        type: Sequelize.ENUM(["Superadmin", "Admin", "Member"]),
+        defaultValue: "Member",
+        allowNull: false,
+      },
       address: {
         type: Sequelize.STRING,
       },
-      role: {
-        type: Sequelize.ENUM(["Owner", "Staff"]),
-      },
-      shopId: {
-        type: DataTypes.INTEGER,
+      carsId: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
       },
       createdAt: {
         allowNull: false,

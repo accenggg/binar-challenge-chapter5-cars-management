@@ -15,13 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
 
-      User.belongsTo(models.Shop, {
-        foreignKey: {
-          name: "shopId",
-        },
-      });
-
-      User.hasMany(models.Product, {
+      User.hasOne(models.Cars, {
         foreignKey: {
           name: "userId",
         },
@@ -30,14 +24,20 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       age: DataTypes.INTEGER,
       role: {
-        type: DataTypes.ENUM(["Owner", "Staff"]),
-        defaultValue: "Staff",
+        type: DataTypes.ENUM(["Superadmin", "Admin", "Member"]),
+        defaultValue: "Member",
+        allowNull: false,
       },
       address: DataTypes.STRING,
-      shopId: DataTypes.INTEGER,
+      carsId: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
+      },
     },
     {
       sequelize,
