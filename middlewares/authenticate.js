@@ -18,6 +18,11 @@ module.exports = async (req, res, next) => {
       include: ["Auth"],
     });
 
+    if (!user) {
+      console.log("User tidak ditemukan");
+      return next(new ApiError("Pengguna tidak ditemukan", 401));
+    }
+
     req.user = user;
     next();
   } catch (err) {

@@ -15,18 +15,18 @@ const register = async (req, res, next) => {
     });
 
     if (user) {
-      next(new ApiError("User email already taken", 400));
+      return next(new ApiError("email telah digunakan!", 400));
     }
 
     // minimum password length
     const passwordLength = password <= 8;
     if (passwordLength) {
-      next(new ApiError("Minimum password must be 8 character", 400));
+      return next(new ApiError("Minimum password must be 8 character", 400));
     }
 
     // minimum password length
     if (password !== confirmPassword) {
-      next(new ApiError("password does not match", 400));
+      return next(new ApiError("password does not match", 400));
     }
 
     // hashing password
@@ -34,22 +34,22 @@ const register = async (req, res, next) => {
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
     const hashedConfirmPassword = bcrypt.hashSync(confirmPassword, saltRounds);
 
-    console.log(req.user.shopId);
-
     const newUser = await User.create({
       name,
-      address,
       age,
-      shopId: req.user.shopId,
+      role: "Member",
+      address,
+      carsId: [],
     });
-    const test = await Auth.create({
+
+    const newAuth = await Auth.create({
       email,
       password: hashedPassword,
       confirmPassword: hashedConfirmPassword,
       userId: newUser.id,
     });
 
-    console.log(test);
+    console.log(newAuth);
 
     res.status(201).json({
       status: "Success",
@@ -81,9 +81,9 @@ const login = async (req, res, next) => {
       const token = jwt.sign(
         {
           id: user.userId,
-          username: user.User.name,
-          role: user.User.role,
           email: user.email,
+          name: user.User.name,
+          role: user.User.role,
         },
         process.env.JWT_SECRET
       );

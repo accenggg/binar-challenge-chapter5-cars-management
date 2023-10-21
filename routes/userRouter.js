@@ -5,10 +5,10 @@ const User = require("../controller/userController");
 const autentikasi = require("../middlewares/authenticate");
 const checkRole = require("../middlewares/checkRole");
 
-router.post("/", User.createUser);
-router.get("/", User.findUsers);
-router.get("/:id", User.findUserById);
-router.patch("/:id", User.updateUser);
-router.delete("/:id", User.deleteUser);
+router.post("/", autentikasi, checkRole("Superadmin"), User.createUser);
+router.get("/", autentikasi, checkRole("Superadmin"), User.findUsers);
+router.get("/:id", autentikasi, checkRole("Superadmin"), User.findUserById);
+router.patch("/:id", autentikasi, checkRole("Superadmin"), User.updateUser);
+router.delete("/:id", autentikasi, checkRole("Superadmin"), User.deleteUser);
 
 module.exports = router;

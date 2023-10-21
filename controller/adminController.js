@@ -12,18 +12,6 @@ const createProduct = async (req, res) => {
   console.log(req.body);
 
   try {
-    // dapatkan extension file nya
-    const split = file.originalname.split(".");
-    const extension = split[split.length - 1];
-
-    // upload file ke imagekit
-    const img = await imagekit.upload({
-      file: file.buffer,
-      fileName: `IMG-${Date.now()}.${extension}`,
-    });
-
-    // IMG-10062023.jpeg
-
     await Product.create({
       name,
       price,

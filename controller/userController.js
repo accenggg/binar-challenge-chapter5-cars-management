@@ -1,41 +1,77 @@
-const { User } = require("../models");
+const { User, Auth } = require("../models");
 const ApiError = require("../utils/apiError");
 const toPascalCase = require("../lib/pascalCase");
 const { array } = require("../middlewares/uploader");
+const bcrypt = require("bcrypt");
 
 const createUser = async (req, res, next) => {
-  const { name, age, role, address, carsId } = req.body;
-
-  const fixRole = toPascalCase(role);
-
-  console.log(fixRole);
+  const { name, email, password, confirmPassword, age, address, role } =
+    req.body;
 
   try {
+    const fixRole = toPascalCase(role);
+    const user = await Auth.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      return next(new ApiError("email telah digunakan!", 400));
+    }
+
+    // minimum password length
+    const passwordLength = password <= 8;
+    if (passwordLength) {
+      return next(new ApiError("minimal password 8 karakter", 400));
+    }
+
+    // minimum password length
+    if (password !== confirmPassword) {
+      return next(new ApiError("password tidak sesuai", 400));
+    }
+
+    // hashing password
+    const saltRounds = 10;
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
+    const hashedConfirmPassword = bcrypt.hashSync(confirmPassword, saltRounds);
+
     if (fixRole === "Admin" || fixRole === "Member") {
-      const user = await User.create({
+      // if (typeof carsId != "object") {
+      //   return next(new ApiError("masukkan data cardId kedalam Array '[]'"));
+      // }
+
+      const newUser = await User.create({
         name,
         age,
         role: fixRole,
         address,
-        carsId: carsId,
+        carsId: [],
+      });
+
+      const auth = await Auth.create({
+        email,
+        password: hashedPassword,
+        confirmPassword: hashedConfirmPassword,
+        userId: newUser.id,
       });
 
       res.status(201).json({
         status: "Success",
         data: {
-          user,
+          ...newUser,
+          email,
+          password: hashedPassword,
+          confirmPassword: hashedConfirmPassword,
         },
       });
     } else {
-      res.status(400).json({
-        message: "Role hanya bisa diisi dengan 'Admin' atau 'Member'",
-      });
+      next(
+        new ApiError("role hanya bisa diisi dengan 'Admin' atau 'Member'", 400)
+      );
     }
   } catch (err) {
-    res.status(400).json({
-      status: "Failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 500));
   }
 };
 
@@ -50,7 +86,7 @@ const findUsers = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
+    next(new ApiError(err.message, 500));
   }
 };
 
@@ -61,6 +97,10 @@ const findUserById = async (req, res, next) => {
         id: req.params.id,
       },
     });
+
+    if (!user) {
+      return next(new ApiError("User id tersebut tidak ada", 404));
+    }
 
     res.status(200).json({
       status: "Success",
@@ -82,12 +122,14 @@ const updateUser = async (req, res, next) => {
       },
     });
 
-    if (typeof carsId != "object") {
-      next(new ApiError("masukkan data cardId kedalam Array ([])"));
+    if (!user) {
+      return next(new ApiError("User id tersebut tidak ada", 404));
     }
 
-    if (!user) {
-      next(new ApiError("User id tersebut gak ada", 404));
+    if (carsId) {
+      if (typeof carsId != "object") {
+        return next(new ApiError("masukkan data cardId kedalam Array ([])"));
+      }
     }
 
     await User.update(
@@ -123,7 +165,7 @@ const deleteUser = async (req, res, next) => {
     });
 
     if (!user) {
-      next(new ApiError("User id tersebut gak ada", 404));
+      return next(new ApiError("User id tersebut gak ada", 404));
     }
 
     await User.destroy({

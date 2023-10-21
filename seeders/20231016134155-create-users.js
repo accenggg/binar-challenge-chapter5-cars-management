@@ -1,55 +1,48 @@
 "use strict";
 
-const { Shop, User } = require("../models");
+const { User } = require("../models");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const shops = await Shop.findAll();
-
     await queryInterface.bulkInsert("Users", [
       {
         name: "Imam",
+        age: 20,
+        role: "Superadmin",
         address: "Bandung",
-        age: 24,
-        role: "Owner",
-        shopId: shops[0].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Syifa",
-        address: "Yogya",
-        age: 34,
-        role: "Owner",
-        shopId: shops[1].id,
+        name: "Michael",
+        age: 19,
+        role: "Superadmin",
+        address: "Samarinda",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Jordhy",
-        address: "Mars",
-        age: 121,
-        role: "Owner",
-        shopId: shops[2].id,
+        name: "Yoga",
+        age: 20,
+        role: "Superadmin",
+        address: "Balikpapan",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Fajrin",
-        address: "Komodo Island",
-        age: 10,
-        role: "Owner",
-        shopId: shops[3].id,
+        name: "Ali",
+        age: 20,
+        role: "Superadmin",
+        address: "Balikpapan",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: "Adella",
-        address: "Amerika",
-        age: 35,
-        role: "Owner",
-        shopId: shops[4].id,
+        name: "Ale",
+        age: 21,
+        role: "Superadmin",
+        address: "Medan",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -61,41 +54,51 @@ module.exports = {
       "Auths",
       [
         {
-          email: "imam@mail.com",
+          email: "imam@gmail.com",
           password:
+            "$2a$12$PSRKkLdltfqePXnr5Q8bLOktu43ob1XxoxHuRqlXbvP6FcgoBMgR2",
+          confirmPassword:
             "$2a$12$PSRKkLdltfqePXnr5Q8bLOktu43ob1XxoxHuRqlXbvP6FcgoBMgR2",
           userId: users[0].id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: "syifa@mail.com",
+          email: "michael@gmail.com",
           password:
-            "$2a$12$PSRKkLdltfqePXnr5Q8bLOktu43ob1XxoxHuRqlXbvP6FcgoBMgR2",
+            "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2",
+          confirmPassword:
+            "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2",
           userId: users[1].id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: "jordhy@mail.com",
+          email: "yoga@gmail.com",
           password:
-            "$2a$12$DEYdP8xu/3y8Gq0fVx1we.IArBAJW8EMEhrzA9mC8M9xOxsb/DrDm",
+            "$2a$12$h6vO.zh8DcHbEoRZMN/5g.s46E1YCsL7Cz5kgElSf3V2mMyjazB1K",
+          confirmPassword:
+            "$2a$12$h6vO.zh8DcHbEoRZMN/5g.s46E1YCsL7Cz5kgElSf3V2mMyjazB1K",
           userId: users[2].id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: "fajrin@mail.com",
+          email: "ali@gmail.com",
           password:
-            "$2a$12$PSRKkLdltfqePXnr5Q8bLOktu43ob1XxoxHuRqlXbvP6FcgoBMgR2",
+            "$2a$12$9RUSXuWqOvo1IJLOq2qG1OHh6E0ZaVmkNHuxoxWKxLdJvuLBP1SVq",
+          confirmPassword:
+            "$2a$12$9RUSXuWqOvo1IJLOq2qG1OHh6E0ZaVmkNHuxoxWKxLdJvuLBP1SVq",
           userId: users[3].id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: "adella@mail.com",
+          email: "ale@gmail.com",
           password:
-            "$2a$12$.bra7MxjtVng08xRdnyExerrJ2Znpg2TGMLW9O9zZ3cDR/PFrqoqW",
+            "$2a$12$FQWSG8KM9U.nBrkKGIbWeuJL8nvDAIeiGk3H2hnPPdpbnczOodT26",
+          confirmPassword:
+            "$2a$12$FQWSG8KM9U.nBrkKGIbWeuJL8nvDAIeiGk3H2hnPPdpbnczOodT26",
           userId: users[4].id,
           createdAt: new Date(),
           updatedAt: new Date(),
