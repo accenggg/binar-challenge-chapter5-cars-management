@@ -4,7 +4,7 @@
 
 ini database diagram dari challenge chapter 5 Car Management Dashboard :
 
-![My Image](/public/img/db-diagram.png)
+![My Image](/public/img/db-diagrams-cars.png)
 
 2. Configuration :
 
