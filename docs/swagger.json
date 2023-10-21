@@ -1,0 +1,522 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge FSW2 Chapter 5 - Cars Management API",
+    "description": "Open API untuk Cars Management API",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Auths",
+      "description": "API untuk AUTH resources"
+    },
+    {
+      "name": "Users",
+      "description": "API untuk USERS resources"
+    },
+    {
+      "name": "Cars",
+      "description": "API untuk CARS resources"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auths"],
+        "summary": "Return hasil hit API registrasi",
+        "description": "API untuk registrasi member",
+        "requestBody": {
+          "description": "request body untuk registrasi yang sukses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "arsel"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "arsel@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "arselganteng"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "arselganteng"
+                  },
+                  "age": {
+                    "type": "integer",
+                    "example": 18
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Samarinda"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Berhasil registrasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dataValues": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 6
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "arsel"
+                            },
+                            "age": {
+                              "type": "integer",
+                              "example": 18
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Member"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "Samarinda"
+                            },
+                            "carsId": {
+                              "type": "array",
+                              "example": []
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T06:45:45.599Z"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T06:45:45.599Z"
+                            }
+                          }
+                        },
+                        "_previousDataValues": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 6
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "arsel"
+                            },
+                            "age": {
+                              "type": "integer",
+                              "example": 18
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Member"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "Samarinda"
+                            },
+                            "carsId": {
+                              "type": "array",
+                              "example": []
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T06:45:45.599Z"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T06:45:45.599Z"
+                            }
+                          }
+                        },
+                        "uniqno": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "_changed": {
+                          "type": "object",
+                          "example": {}
+                        },
+                        "_options": {
+                          "type": "object",
+                          "properties": {
+                            "isNewRecord": {
+                              "type": "boolean",
+                              "example": true
+                            },
+                            "_schema": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "_schemaDelimiter": {
+                              "type": "string",
+                              "example": ""
+                            }
+                          }
+                        },
+                        "isNewRecord": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "arsel@gmail.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "$2a$12$EuuyNlSyewdUFy.iikrb8OZBCz79LJFir70k8Z4QiqzX67apy2JTG"
+                        },
+                        "confirmPassword": {
+                          "type": "string",
+                          "example": "$2a$12$EuuyNlSyewdUFy.iikrb8OZBCz79LJFir70k8Z4QiqzX67apy2JTG"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal registrasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "email telah digunakan"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auths"],
+        "summary": "Return hasil hit API login",
+        "description": "API untuk login member",
+        "requestBody": {
+          "description": "request body untuk login yang sukses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "arsel@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "arselganteng"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sukses login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Berhasil login"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJhcnNlbEBnbWFpbC5jb20iLCJuYW1lIjoiYXJzZWwiLCJyb2xlIjoiTWVtYmVyIiwiaWF0IjoxNjk3ODczOTgxfQ.Xag0MvtzUs11FMyF0387RsXKlIiLx0AragW-MTwoYuE"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "password salah atau user tidak ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["Auths"],
+        "security": [{ "bearerToken": [] }],
+        "summary": "Return hasil hit API check token",
+        "description": "API untuk cek token member",
+        "responses": {
+          "200": {
+            "description": "Sukses check token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 2
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Michael"
+                            },
+                            "age": {
+                              "type": "integer",
+                              "example": 19
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Superadmin"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "Samarinda"
+                            },
+                            "carsId": {
+                              "type": "array",
+                              "example": null
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T05:40:00.372Z"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T05:40:00.372Z"
+                            },
+                            "Auth": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "example": 2
+                                },
+                                "email": {
+                                  "type": "string",
+                                  "example": "michael@gmail.com"
+                                },
+                                "password": {
+                                  "type": "string",
+                                  "example": "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2"
+                                },
+                                "confirmPassword": {
+                                  "type": "string",
+                                  "example": "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2"
+                                },
+                                "userId": {
+                                  "type": "integer",
+                                  "example": 2
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "example": "2023-10-21T05:40:00.537Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "example": "2023-10-21T05:40:00.537Z"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Gagal check token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "token tidak ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

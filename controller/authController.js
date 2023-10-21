@@ -22,12 +22,12 @@ const register = async (req, res, next) => {
     // minimum password length
     const passwordLength = password <= 8;
     if (passwordLength) {
-      return next(new ApiError("Minimum password must be 8 character", 400));
+      return next(new ApiError("minimal password berisi 8 karakter", 400));
     }
 
     // minimum password length
     if (password !== confirmPassword) {
-      return next(new ApiError("password does not match", 400));
+      return next(new ApiError("password tidak sesuai", 400));
     }
 
     // hashing password
@@ -95,7 +95,7 @@ const login = async (req, res, next) => {
         data: token,
       });
     } else {
-      next(new ApiError("wrong password atau user gak ada", 400));
+      next(new ApiError("password salah atau user tidak ada", 400));
     }
   } catch (err) {
     next(new ApiError(err.message, 500));
