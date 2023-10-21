@@ -17,6 +17,10 @@
     {
       "name": "Cars",
       "description": "API untuk CARS resources"
+    },
+    {
+      "name": "Traces",
+      "description": "API untuk TRACE resources"
     }
   ],
   "servers": [
@@ -467,6 +471,369 @@
           },
           "401": {
             "description": "Gagal check token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "token tidak ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hasil hit API create user",
+        "description": "API untuk create user",
+        "requestBody": {
+          "description": "request body untuk create user yang sukses",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "bintang"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "bintang@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "bintangganteng"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "bintangganteng"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "Admin"
+                  },
+                  "age": {
+                    "type": "integer",
+                    "example": 18
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Samarinda"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Berhasil registrasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dataValues": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 8
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "bintang"
+                            },
+                            "age": {
+                              "type": "integer",
+                              "example": 18
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Admin"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "Samarinda"
+                            },
+                            "carsId": {
+                              "type": "array",
+                              "example": []
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T08:52:23.996Z"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T08:52:23.996Z"
+                            }
+                          }
+                        },
+                        "_previousDataValues": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 6
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "bintang"
+                            },
+                            "age": {
+                              "type": "integer",
+                              "example": 18
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Admin"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "Samarinda"
+                            },
+                            "carsId": {
+                              "type": "array",
+                              "example": []
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T08:52:23.996Z"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T08:52:23.996Z"
+                            }
+                          }
+                        },
+                        "uniqno": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "_changed": {
+                          "type": "object",
+                          "example": {}
+                        },
+                        "_options": {
+                          "type": "object",
+                          "properties": {
+                            "isNewRecord": {
+                              "type": "boolean",
+                              "example": true
+                            },
+                            "_schema": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "_schemaDelimiter": {
+                              "type": "string",
+                              "example": ""
+                            }
+                          }
+                        },
+                        "isNewRecord": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "bintang@gmail.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "$2b$10$DjS4ltjPI4Zao.4O7qdZ8O2O91IdpVfBD3OAO5PbiyiXRqihjD1Mq"
+                        },
+                        "confirmPassword": {
+                          "type": "string",
+                          "example": "$2b$10$DjS4ltjPI4Zao.4O7qdZ8O2O91IdpVfBD3OAO5PbiyiXRqihjD1Mq"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal registrasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "email telah digunakan"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hasil hit API find all user",
+        "description": "API untuk find all user",
+        "responses": {
+          "201": {
+            "description": "Berhasil registrasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Imam"
+                              },
+                              "age": {
+                                "type": "integer",
+                                "example": 20
+                              },
+                              "role": {
+                                "type": "string",
+                                "example": "Superadmin"
+                              },
+                              "address": {
+                                "type": "string",
+                                "example": "Bandung"
+                              },
+                              "carsId": {
+                                "type": "array",
+                                "example": null
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "example": "2023-10-21T05:40:00.372Z"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2023-10-21T05:40:00.372Z"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal find all user",
             "content": {
               "application/json": {
                 "schema": {
