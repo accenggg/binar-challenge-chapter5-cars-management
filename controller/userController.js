@@ -1,8 +1,8 @@
+const bcrypt = require("bcrypt");
+
 const { User, Auth } = require("../models");
 const ApiError = require("../utils/apiError");
 const toPascalCase = require("../lib/pascalCase");
-const { array } = require("../middlewares/uploader");
-const bcrypt = require("bcrypt");
 
 const createUser = async (req, res, next) => {
   const { name, email, password, confirmPassword, age, address, role } =
@@ -165,7 +165,7 @@ const deleteUser = async (req, res, next) => {
     });
 
     if (!user) {
-      return next(new ApiError("User id tersebut gak ada", 404));
+      return next(new ApiError("User id tersebut tidak ada", 404));
     }
 
     await User.destroy({
