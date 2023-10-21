@@ -7,6 +7,7 @@ const createCar = async (req, res, next) => {
   try {
     const whoAccess = req.user.name;
 
+    console.log(whoAccess);
     const car = await Car.findOne({
       where: {
         name,
@@ -49,12 +50,12 @@ const createCar = async (req, res, next) => {
 
 const findCars = async (req, res, next) => {
   try {
-    const users = await Car.findAll();
+    const cars = await Car.findAll();
 
     res.status(200).json({
       status: "Success",
       data: {
-        users,
+        cars,
       },
     });
   } catch (err) {
@@ -95,6 +96,7 @@ const findCarByStatus = async (req, res, next) => {
 
 const updateCar = async (req, res, next) => {
   const { name, price, status } = req.body;
+  console.log(name, price, status);
   try {
     const whoAccess = req.user.name;
     const car = await Car.findOne({
@@ -122,6 +124,17 @@ const updateCar = async (req, res, next) => {
           }
         );
 
+        await TraceCar.update(
+          {
+            updatedBy: whoAccess,
+          },
+          {
+            where: {
+              carId: car.id,
+            },
+          }
+        );
+
         res.status(200).json({
           status: "Success",
           message: "sukses update car",
@@ -142,6 +155,7 @@ const updateCar = async (req, res, next) => {
 
 const deleteCar = async (req, res, next) => {
   try {
+    const whoAccess = req.user.name;
     const car = await Car.findOne({
       where: {
         id: req.params.id,
@@ -151,6 +165,18 @@ const deleteCar = async (req, res, next) => {
     if (!car) {
       return next(new ApiError("Car id tersebut tidak ada", 404));
     }
+
+    await TraceCar.update(
+      {
+        updatedBy: whoAccess,
+        deletedBy: whoAccess,
+      },
+      {
+        where: {
+          carId: car.id,
+        },
+      }
+    );
 
     await Car.destroy({
       where: {

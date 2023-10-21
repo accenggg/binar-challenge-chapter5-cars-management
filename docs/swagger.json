@@ -37,6 +37,157 @@
     }
   },
   "paths": {
+    "/auth/me": {
+      "get": {
+        "tags": ["Auths"],
+        "security": [{ "bearerToken": [] }],
+        "summary": "Return hasil hit API check token",
+        "description": "API untuk cek token member",
+        "responses": {
+          "200": {
+            "description": "Sukses check token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 2
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Michael"
+                            },
+                            "age": {
+                              "type": "integer",
+                              "example": 19
+                            },
+                            "role": {
+                              "type": "string",
+                              "example": "Superadmin"
+                            },
+                            "address": {
+                              "type": "string",
+                              "example": "Samarinda"
+                            },
+                            "carsId": {
+                              "type": "array",
+                              "example": null
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T05:40:00.372Z"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T05:40:00.372Z"
+                            },
+                            "Auth": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "example": 2
+                                },
+                                "email": {
+                                  "type": "string",
+                                  "example": "michael@gmail.com"
+                                },
+                                "password": {
+                                  "type": "string",
+                                  "example": "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2"
+                                },
+                                "confirmPassword": {
+                                  "type": "string",
+                                  "example": "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2"
+                                },
+                                "userId": {
+                                  "type": "integer",
+                                  "example": 2
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "example": "2023-10-21T05:40:00.537Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "example": "2023-10-21T05:40:00.537Z"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Gagal check token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "token tidak ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": ["Auths"],
@@ -371,15 +522,19 @@
         }
       }
     },
-    "/auth/me": {
+    "/users": {
       "get": {
-        "tags": ["Auths"],
-        "security": [{ "bearerToken": [] }],
-        "summary": "Return hasil hit API check token",
-        "description": "API untuk cek token member",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hasil hit API find all user",
+        "description": "API untuk find all user",
         "responses": {
-          "200": {
-            "description": "Sukses check token",
+          "201": {
+            "description": "Berhasil registrasi",
             "content": {
               "application/json": {
                 "schema": {
@@ -392,72 +547,42 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "user": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "integer",
-                              "example": 2
-                            },
-                            "name": {
-                              "type": "string",
-                              "example": "Michael"
-                            },
-                            "age": {
-                              "type": "integer",
-                              "example": 19
-                            },
-                            "role": {
-                              "type": "string",
-                              "example": "Superadmin"
-                            },
-                            "address": {
-                              "type": "string",
-                              "example": "Samarinda"
-                            },
-                            "carsId": {
-                              "type": "array",
-                              "example": null
-                            },
-                            "createdAt": {
-                              "type": "string",
-                              "example": "2023-10-21T05:40:00.372Z"
-                            },
-                            "updatedAt": {
-                              "type": "string",
-                              "example": "2023-10-21T05:40:00.372Z"
-                            },
-                            "Auth": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "integer",
-                                  "example": 2
-                                },
-                                "email": {
-                                  "type": "string",
-                                  "example": "michael@gmail.com"
-                                },
-                                "password": {
-                                  "type": "string",
-                                  "example": "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2"
-                                },
-                                "confirmPassword": {
-                                  "type": "string",
-                                  "example": "$2a$12$TFxC50o0GYPArFDONh0GLuuHAQx9.220MvWwkvd6YHBMeeHMjama2"
-                                },
-                                "userId": {
-                                  "type": "integer",
-                                  "example": 2
-                                },
-                                "createdAt": {
-                                  "type": "string",
-                                  "example": "2023-10-21T05:40:00.537Z"
-                                },
-                                "updatedAt": {
-                                  "type": "string",
-                                  "example": "2023-10-21T05:40:00.537Z"
-                                }
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Imam"
+                              },
+                              "age": {
+                                "type": "integer",
+                                "example": 20
+                              },
+                              "role": {
+                                "type": "string",
+                                "example": "Superadmin"
+                              },
+                              "address": {
+                                "type": "string",
+                                "example": "Bandung"
+                              },
+                              "carsId": {
+                                "type": "array",
+                                "example": null
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "example": "2023-10-21T05:40:00.372Z"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2023-10-21T05:40:00.372Z"
                               }
                             }
                           }
@@ -469,8 +594,8 @@
               }
             }
           },
-          "401": {
-            "description": "Gagal check token",
+          "400": {
+            "description": "Gagal find all user",
             "content": {
               "application/json": {
                 "schema": {
@@ -520,9 +645,7 @@
             }
           }
         }
-      }
-    },
-    "/users": {
+      },
       "post": {
         "tags": ["Users"],
         "security": [
@@ -760,19 +883,17 @@
             }
           }
         }
-      },
+      }
+    },
+    "/trace": {
       "get": {
-        "tags": ["Users"],
-        "security": [
-          {
-            "bearerToken": []
-          }
-        ],
-        "summary": "Return hasil hit API find all user",
-        "description": "API untuk find all user",
+        "tags": ["Traces"],
+        "security": [{ "bearerToken": [] }],
+        "summary": "Return hasil hit API trace cars",
+        "description": "API untuk cek trace cars",
         "responses": {
-          "201": {
-            "description": "Berhasil registrasi",
+          "200": {
+            "description": "Berhasil menampilkan data trace cars",
             "content": {
               "application/json": {
                 "schema": {
@@ -785,42 +906,64 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "users": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "integer",
-                                "example": 1
-                              },
-                              "name": {
-                                "type": "string",
-                                "example": "Imam"
-                              },
-                              "age": {
-                                "type": "integer",
-                                "example": 20
-                              },
-                              "role": {
-                                "type": "string",
-                                "example": "Superadmin"
-                              },
-                              "address": {
-                                "type": "string",
-                                "example": "Bandung"
-                              },
-                              "carsId": {
-                                "type": "array",
-                                "example": null
-                              },
-                              "updatedAt": {
-                                "type": "string",
-                                "example": "2023-10-21T05:40:00.372Z"
-                              },
-                              "createdAt": {
-                                "type": "string",
-                                "example": "2023-10-21T05:40:00.372Z"
+                        "traceCar": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "createdBy": {
+                              "type": "string",
+                              "example": "Michael"
+                            },
+                            "deletedBy": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "updatedBy": {
+                              "type": "string",
+                              "example": "Michael"
+                            },
+                            "carId": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T06:01:14.276Z"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T06:01:14.276Z"
+                            },
+                            "Car": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "example": 1
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "example": "Civic"
+                                },
+                                "price": {
+                                  "type": "integer",
+                                  "example": 42200
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "example": "Available"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "example": "2023-10-21T06:01:14.253Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "example": "2023-10-21T06:01:14.253Z"
+                                }
                               }
                             }
                           }
@@ -833,7 +976,662 @@
             }
           },
           "400": {
-            "description": "Gagal find all user",
+            "description": "Gagal menampilkan data trace cars",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "token tidak ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{status}": {
+      "get": {
+        "tags": ["Cars"],
+        "security": [{ "bearerToken": [] }],
+        "summary": "Return hasil hit API find car by status",
+        "description": "API untuk cek find car by status",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "status",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Parameter untuk cek status car<br>Format status: '/available dan /not-available'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil menampilkan data find car by status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "car": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Civic"
+                              },
+                              "price": {
+                                "type": "integer",
+                                "example": 42200
+                              },
+                              "status": {
+                                "type": "string",
+                                "example": "Available"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2023-10-21T06:01:14.253Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "example": "2023-10-21T06:01:14.253Z"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal menampilkan data find car by status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "kesalahan pada parameter, format: '/available' atau '/not-available'"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars": {
+      "get": {
+        "tags": ["Cars"],
+        "security": [{ "bearerToken": [] }],
+        "summary": "Return hasil hit API find all cars",
+        "description": "API untuk cek find all cars",
+        "responses": {
+          "200": {
+            "description": "Berhasil menampilkan data find all cars",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cars": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Civic"
+                              },
+                              "price": {
+                                "type": "integer",
+                                "example": 42200
+                              },
+                              "status": {
+                                "type": "string",
+                                "example": "Available"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2023-10-21T06:01:14.253Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "example": "2023-10-21T06:01:14.253Z"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal menampilkan data trace cars",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "token tidak ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hasil hit API create car",
+        "description": "API untuk create car",
+        "requestBody": {
+          "description": "request body untuk create car yang sukses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Sedan"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 60000
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "Available"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Berhasil create car",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dataValues": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 6
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Sedan"
+                            },
+                            "price": {
+                              "type": "integer",
+                              "example": 60000
+                            },
+                            "status": {
+                              "type": "string",
+                              "example": "Available"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T14:33:03.790Z"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T14:33:03.790Z"
+                            }
+                          }
+                        },
+                        "_previousDataValues": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 6
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Sedan"
+                            },
+                            "price": {
+                              "type": "integer",
+                              "example": 60000
+                            },
+                            "status": {
+                              "type": "string",
+                              "example": "Available"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "example": "2023-10-21T14:33:03.790Z"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "example": "2023-10-21T14:33:03.790Z"
+                            }
+                          }
+                        },
+                        "uniqno": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "_changed": {
+                          "type": "object",
+                          "example": {}
+                        },
+                        "_options": {
+                          "type": "object",
+                          "properties": {
+                            "isNewRecord": {
+                              "type": "boolean",
+                              "example": true
+                            },
+                            "_schema": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "_schemaDelimiter": {
+                              "type": "string",
+                              "example": ""
+                            }
+                          }
+                        },
+                        "isNewRecord": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "Michael"
+                        },
+                        "deletedBy": {
+                          "type": "string",
+                          "example": null
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "Michael"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal create car",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "nama mobil sudah ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{id}": {
+      "patch": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hasil hit API update car",
+        "description": "API untuk update car",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Parameter id untuk update data car"
+          }
+        ],
+        "requestBody": {
+          "description": "request body untuk update car yang sukses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Sedan"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 60000
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "Not Available"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Berhasil mengupdate data car by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "sukses update car"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal update car",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "token tidak ada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hasil hit API delete car",
+        "description": "API untuk delete car",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Parameter id untuk delete data car"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil delete data car by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "sukses delete car"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal delete car",
             "content": {
               "application/json": {
                 "schema": {
